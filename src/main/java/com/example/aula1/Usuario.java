@@ -2,9 +2,10 @@ package com.example.aula1;
 
 public class Usuario {
     
-
+    private long id;
     private String nome;
     private int idade;
+
 
 
     public String getNome() {
@@ -23,7 +24,12 @@ public class Usuario {
         this.idade = idade;
     }
 
-    
+    public void setId(int id){
+        this.id = id;
+    }
 
+    public long getId(){
+        return id;
+    }
 
 }
