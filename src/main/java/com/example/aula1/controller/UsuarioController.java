@@ -1,8 +1,8 @@
 package com.example.aula1.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.aula1.UsuarioModel;
+import com.example.aula1.model.UsuarioModel;
+import com.example.aula1.service.UsuarioService;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -20,65 +22,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 public class UsuarioController {
 
-    private List<UsuarioModel> usuarios = new ArrayList<>();
+    @Autowired
+    private UsuarioService service;
 
-    int contador = 1;
+
     @PostMapping("/usuario")
     public String saudacao(@RequestBody UsuarioModel usuario) {
-        usuario.setId(contador);
-        contador ++;
-        usuarios.add(usuario);
-       
-        return "Usuário " + usuario.getNome() + " criado com sucesso!";
+        return service.criarUsuario(usuario);
     }
-
 
 
     @GetMapping("/usuarios")
     public List<UsuarioModel> listarUsuarios() {
-        return usuarios;
+        return service.listarUsuarios();
     }
-   
 
 
     @GetMapping("/usuario/{id}")
     public UsuarioModel id(@PathVariable long id ){
 
-        for(UsuarioModel u : usuarios){
-            if (u.getId() == id) {
-                return u;
-            }
-        }
-        return null;
+        return service.buscarPorid(id);
     }
 
 
     @DeleteMapping("/usuario/{id}")
     public String removerUsuariuID(@PathVariable long id){
 
-        boolean resultado = usuarios.removeIf(u -> u.getId() == id);
-
-        if (resultado){
-            return "Usuario removido com sucesso";
-        }else{
-            return "Usuario não encontrado";
-        }
+       return service.removerUsuario(id);
     }
+
 
     @PutMapping("/usuario/{id}")
     public String atualizarUsuarioId(@PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
-        for (UsuarioModel u : usuarios){
-            if (u.getId() == id){
-                u.setNome(usuario_atualizado.getNome());
-                u.setIdade(usuario_atualizado.getIdade());
-                return "Usuario atualizado com sucesso!!";            
-        }
-            
-        }
-        return"Usuario não encontrado";
+                  
+        return service.atualizaUsuario(id, usuario_atualizado);
      }
     
-
 }
  
 

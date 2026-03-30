@@ -1,4 +1,4 @@
-package com.example.aula1;
+package com.example.aula1.model;
 
 public class UsuarioModel {
     
@@ -24,7 +24,7 @@ public class UsuarioModel {
         this.idade = idade;
     }
 
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
 
