@@ -12,6 +12,8 @@ public class UsuarioService {
     private List<UsuarioModel> usuarios = new ArrayList<>();
     private long contador = 1;
 
+
+    
     public String criarUsuario(UsuarioModel usuario){
         usuario.setId(contador);
         contador++;
@@ -26,12 +28,14 @@ public class UsuarioService {
 
 
     public UsuarioModel buscarPorid(long id) {
+        
         for(UsuarioModel u : usuarios){
             if (u.getId() == id){
                 return u;
+
             }
         }
-        return null;
+        return null ;
     }
 
 

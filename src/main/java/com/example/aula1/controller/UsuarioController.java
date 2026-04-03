@@ -2,7 +2,10 @@ package com.example.aula1.controller;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,37 +30,57 @@ public class UsuarioController {
 
 
     @PostMapping("/usuario")
-    public String saudacao(@RequestBody UsuarioModel usuario) {
-        return service.criarUsuario(usuario);
+    public ResponseEntity<String> saudacao(@RequestBody UsuarioModel usuario) {
+        return ResponseEntity.status(201).body(service.criarUsuario(usuario));
+
+        //Requestbody transforma json em objeto(UsuarioModel), esse objeto é guardado na variavel usuario
+        //depois chama a funcao criarUsuario do service passando o objeto da variavel como parametro
+
     }
 
 
     @GetMapping("/usuarios")
-    public List<UsuarioModel> listarUsuarios() {
-        return service.listarUsuarios();
+    public ResponseEntity<List<UsuarioModel>> listarUsuarios() {
+        return ResponseEntity.ok().body(service.listarUsuarios());
     }
 
 
     @GetMapping("/usuario/{id}")
-    public UsuarioModel id(@PathVariable long id ){
+    public ResponseEntity<UsuarioModel> id(@PathVariable long id ){
+        UsuarioModel usuario = service.buscarPorid(id);
 
-        return service.buscarPorid(id);
+        if (usuario != null){
+            return ResponseEntity.ok().body(usuario);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
 
     @DeleteMapping("/usuario/{id}")
-    public String removerUsuariuID(@PathVariable long id){
+    public ResponseEntity<String> removerUsuariuID(@PathVariable long id){
 
-       return service.removerUsuario(id);
+        String resposta = service.removerUsuario(id);
+        if (resposta.contains("sucesso")){
+            return ResponseEntity.ok().body(resposta);
+        }else{
+            return ResponseEntity.status(404).body(resposta);
+        }
+
+       
     }
 
 
-    @PutMapping("/usuario/{id}")
-    public String atualizarUsuarioId(@PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
-                  
-        return service.atualizaUsuario(id, usuario_atualizado);
-     }
-    
+@PutMapping("/usuario/{id}")
+public ResponseEntity<String> atualizarUsuarioId(@PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
+    String resposta = service.atualizaUsuario(id, usuario_atualizado); 
+
+    if (resposta.contains("sucesso")) {
+        return ResponseEntity.ok().body(resposta);
+    } else {
+        return ResponseEntity.status(404).body(resposta);
+    }
 }
  
 
@@ -68,3 +91,4 @@ PostMapping é um mapeador de requisições HTTP POST para o método saudacao.
 RequestBody é uma anotação que indica que o parâmetro do método deve ser preenchido com o corpo da requisição HTTP, que é convertido para um objeto Usuario.
 
  */
+}
