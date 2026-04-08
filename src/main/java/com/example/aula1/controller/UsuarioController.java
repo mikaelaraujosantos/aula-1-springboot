@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.aula1.model.UsuarioModel;
 import com.example.aula1.service.UsuarioService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -32,9 +33,10 @@ public class UsuarioController {
 
 
     @PostMapping("/usuario")
-    public ResponseEntity<String> saudacao(@RequestBody UsuarioModel usuario) {
+    public ResponseEntity<String> saudacao(@Valid @RequestBody UsuarioModel usuario) {
         return ResponseEntity.status(201).body(service.criarUsuario(usuario));
 
+        // o valid faz a validação do objeto
         //Requestbody transforma json em objeto(UsuarioModel), esse objeto é guardado na variavel usuario
         //depois chama a funcao criarUsuario do service passando o objeto da variavel como parametro
 
@@ -75,7 +77,7 @@ public class UsuarioController {
 
 
 @PutMapping("/usuario/{id}")
-public ResponseEntity<String> atualizarUsuarioId(@PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
+public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
     String resposta = service.atualizaUsuario(id, usuario_atualizado); 
 
     if (resposta.contains("sucesso")) {
