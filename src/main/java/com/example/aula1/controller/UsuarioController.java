@@ -19,7 +19,6 @@ import com.example.aula1.service.UsuarioService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
