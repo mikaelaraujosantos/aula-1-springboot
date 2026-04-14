@@ -71,29 +71,24 @@ public class UsuarioController {
 
 
     @DeleteMapping("/usuario/{id}")
-    public ResponseEntity<String> removerUsuariuID(@PathVariable long id){
+    public ResponseEntity<Void> removerUsuariuID(@PathVariable long id){
 
-        String resposta = service.removerUsuario(id);
-        if (resposta.contains("sucesso")){
-            return ResponseEntity.ok().body(resposta);
-        }else{
-            return ResponseEntity.status(404).body(resposta);
-        }
+        service.removerUsuario(id);
+        
+        return ResponseEntity.noContent().build();
 
        
     }
 
 
     @PutMapping("/usuario/{id}")
-    public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
-    String resposta = service.atualizaUsuario(id, usuario_atualizado); 
+    public ResponseEntity<Void> atualizarUsuarioId(@Valid @PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
+    service.atualizaUsuario(id, usuario_atualizado); 
 
-    if (resposta.contains("sucesso")) {
-        return ResponseEntity.ok().body(resposta);
-    } else {
-        return ResponseEntity.status(404).body(resposta);
+    
+        return ResponseEntity.noContent().build();
     }
-}
+
 
 
     @GetMapping("/usuario/nome/{nome}")

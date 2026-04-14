@@ -102,14 +102,20 @@ public class PedidoService {
     }
 
 
-    public String removerPedido(Long id) {
+    public void removerPedido(Long id) {
         Optional<PedidoModel> pedido = repository.findById(id);
+
         if (pedido.isPresent()) {
+
             repository.delete(pedido.get());
-            return "Pedido removido com sucesso";
+            
+
         } else {
-            return "Pedido nao encontrado";
+            throw new RuntimeException("Pedido nao encontrado");
         }
+    
     }
+
+    
 
 }

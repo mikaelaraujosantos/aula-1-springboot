@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.aula1.dto.UsuarioCreateDTO;
 import com.example.aula1.dto.UsuarioDTO;
+import com.example.aula1.exception.UsuarioNaoEncontradoException;
 import com.example.aula1.model.UsuarioModel;
 import com.example.aula1.repository.UsuarioRepository;
 
@@ -44,18 +45,18 @@ public class UsuarioService {
     }
 
 
-    public String removerUsuario(long id){
+    public Void removerUsuario(long id){
 
         if(repository.existsById(id)){
             repository.deleteById(id);
-            return "Usuario removido com sucesso";
+                 
         }
 
-        return "Usuario nao encontrado";
+        throw new UsuarioNaoEncontradoException("usuario nao encontrado");
     }
 
 
-    public String atualizaUsuario(long id , UsuarioModel usuario_atualizado){
+    public void atualizaUsuario(long id , UsuarioModel usuario_atualizado){
 
         Optional<UsuarioModel> usuario = repository.findById(id);
 
@@ -69,10 +70,10 @@ public class UsuarioService {
 
             repository.save(u);
 
-            return "Usuario atualizado com sucesso";
+            
         }
 
-        return "Usuario nao encontrado";
+        throw new UsuarioNaoEncontradoException("usuario nao encontrado");
     }
 
 
@@ -148,7 +149,7 @@ public class UsuarioService {
 
     } else {
 
-        throw new RuntimeException("Usuario nao encontrado");
+        throw new UsuarioNaoEncontradoException("usuario nao encontrado");
 
      }
     }

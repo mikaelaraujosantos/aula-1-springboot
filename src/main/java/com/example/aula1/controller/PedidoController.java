@@ -81,13 +81,9 @@ public class PedidoController {
     }
 
     @DeleteMapping("/pedido/{id}")
-    public ResponseEntity<String> removerPedido(@PathVariable Long id) {
-        String resposta = service.removerPedido(id);
-        if (resposta.contains("sucesso")) {
-            return ResponseEntity.ok().body(resposta);
-        } else {
-            return ResponseEntity.status(404).body(resposta);
-        }
+    public ResponseEntity<Void> removerPedido(@PathVariable Long id) {
+        service.removerPedido(id);
+        return ResponseEntity.noContent().build();
     }
 
 
