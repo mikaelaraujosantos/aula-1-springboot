@@ -21,10 +21,6 @@ import com.example.aula1.service.UsuarioService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 
 
 
@@ -88,8 +84,8 @@ public class UsuarioController {
     }
 
 
-@PutMapping("/usuario/{id}")
-public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
+    @PutMapping("/usuario/{id}")
+    public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @RequestBody UsuarioModel usuario_atualizado) {
     String resposta = service.atualizaUsuario(id, usuario_atualizado); 
 
     if (resposta.contains("sucesso")) {
@@ -100,8 +96,8 @@ public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @
 }
 
 
- @GetMapping("/usuario/nome/{nome}")
- public ResponseEntity<List<UsuarioModel>> buscarPorNome(@PathVariable String nome) {
+    @GetMapping("/usuario/nome/{nome}")
+     public ResponseEntity<List<UsuarioModel>> buscarPorNome(@PathVariable String nome) {
     List<UsuarioModel> usuarios = service.buscarPorNome(nome);
 
     if (!usuarios.isEmpty()) {
@@ -112,71 +108,71 @@ public ResponseEntity<String> atualizarUsuarioId(@Valid @PathVariable long id, @
     }
  }
 
-@GetMapping("/usuario/idade-menor/{idade}")
-public ResponseEntity<List<UsuarioModel>> buscarIdadeMenorQue(@PathVariable int idade) {
-    List<UsuarioModel> usuarios = service.buscarIdadeMenorQue(idade);
+    @GetMapping("/usuario/idade-menor/{idade}")
+    public ResponseEntity<List<UsuarioModel>> buscarIdadeMenorQue(@PathVariable int idade) {
+        List<UsuarioModel> usuarios = service.buscarIdadeMenorQue(idade);
 
-    if (!usuarios.isEmpty()){
-        return ResponseEntity.ok().body(usuarios);
-    }else{
-        return ResponseEntity.notFound().build();
+        if (!usuarios.isEmpty()){
+            return ResponseEntity.ok().body(usuarios);
+        }else{
+            return ResponseEntity.notFound().build();
 
-    }
- }
- 
- 
-@GetMapping("/usuario/idade-maior/{idade}")
-public ResponseEntity<List<UsuarioModel>> buscarIdadeMaiorQue(@PathVariable int idade) {
-    List<UsuarioModel> usuarios = service.buscarIdadeMaiorQue(idade);
-    if (!usuarios.isEmpty()){
-        return ResponseEntity.ok().body(usuarios);
-    }else{
-        return ResponseEntity.notFound().build();
+        }
     }
     
-}
-
-
- @GetMapping("/usuario/nome-contem/{nome}")
- public ResponseEntity<List<UsuarioModel>>buscarNomeContem(@PathVariable String nome){
-    List<UsuarioModel> usuarios = service.buscarNomeContem(nome);
-    if (!usuarios.isEmpty()){
-        return ResponseEntity.ok().body(usuarios);
-    }else{
-        return ResponseEntity.notFound().build();
+    
+    @GetMapping("/usuario/idade-maior/{idade}")
+    public ResponseEntity<List<UsuarioModel>> buscarIdadeMaiorQue(@PathVariable int idade) {
+        List<UsuarioModel> usuarios = service.buscarIdadeMaiorQue(idade);
+        if (!usuarios.isEmpty()){
+            return ResponseEntity.ok().body(usuarios);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+        
     }
- }
 
 
- @GetMapping("/usuarios/dto")
- public ResponseEntity<List<UsuarioDTO>> listarUsuariosDTO() {
-     List<UsuarioDTO> usuarios = service.listarUsuariosDTO();
-     return ResponseEntity.ok().body(usuarios);
- }
- 
+    @GetMapping("/usuario/nome-contem/{nome}")
+    public ResponseEntity<List<UsuarioModel>>buscarNomeContem(@PathVariable String nome){
+        List<UsuarioModel> usuarios = service.buscarNomeContem(nome);
+        if (!usuarios.isEmpty()){
+            return ResponseEntity.ok().body(usuarios);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
- @PostMapping("/usuario/dto")
- public ResponseEntity<UsuarioDTO> criarUsuarioDTO(@Valid@RequestBody UsuarioCreateDTO dto) {
-     
-     UsuarioDTO entity = service.criarUsuarioDTO(dto);
-     
-     return ResponseEntity.ok().body(entity);
- }
+    @GetMapping("/usuarios/dto")
+    public ResponseEntity<List<UsuarioDTO>> listarUsuariosDTO() {
+        List<UsuarioDTO> usuarios = service.listarUsuariosDTO();
+        return ResponseEntity.ok().body(usuarios);
+    }
+    
 
 
- @PutMapping("/usuario/dto/{id}")
- public ResponseEntity<UsuarioDTO> atualizarPorIdDTO( @PathVariable Long id, @Valid @RequestBody UsuarioCreateDTO dto) {
+    @PostMapping("/usuario/dto")
+    public ResponseEntity<UsuarioDTO> criarUsuarioDTO(@Valid@RequestBody UsuarioCreateDTO dto) {
+        
+        UsuarioDTO entity = service.criarUsuarioDTO(dto);
+        
+        return ResponseEntity.ok().body(entity);
+    }
+
+
+    @PutMapping("/usuario/dto/{id}")
+    public ResponseEntity<UsuarioDTO> atualizarPorIdDTO( @PathVariable Long id, @Valid @RequestBody UsuarioCreateDTO dto) {
      
      return ResponseEntity.ok()
         .body(service.atualizarPorIdDTO(id, dto));
  }
 
 /* 
-RestController é uma anotação do Spring que indica que a classe é um controlador Rest.
-GetMapping é um mapeador de requisições HTTP GET para o método hello.
-PostMapping é um mapeador de requisições HTTP POST para o método saudacao.
-RequestBody é uma anotação que indica que o parâmetro do método deve ser preenchido com o corpo da requisição HTTP, que é convertido para um objeto Usuario.
 
+RequestBody é uma anotação que indica que o parâmetro do método deve ser preenchido com o corpo da requisição HTTP, 
+que é convertido para um objeto Usuario.
+
+PhathVariable indica que o parâmetro do método deve ser preenchido com o valor da rota.
  */
 }

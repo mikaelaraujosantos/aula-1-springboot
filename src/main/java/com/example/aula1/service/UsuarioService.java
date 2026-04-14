@@ -23,6 +23,7 @@ public class UsuarioService {
         return "Usuario criado com sucesso";
     }
 
+
     public String criarVariosUsuarios(List<UsuarioModel> usuarios){
         repository.saveAll(usuarios);
         return "Usuarios criados com sucesso";
@@ -34,12 +35,14 @@ public class UsuarioService {
         return repository.findAll();
     }
 
+
     public UsuarioModel buscarPorid(long id){
 
         Optional<UsuarioModel> usuario = repository.findById(id);
 
         return usuario.orElse(null);
     }
+
 
     public String removerUsuario(long id){
 
@@ -50,6 +53,7 @@ public class UsuarioService {
 
         return "Usuario nao encontrado";
     }
+
 
     public String atualizaUsuario(long id , UsuarioModel usuario_atualizado){
 
@@ -72,7 +76,6 @@ public class UsuarioService {
     }
 
 
-
     public List<UsuarioModel> buscarPorNome(String nome){
         return repository.buscarPorNome(nome);
     }
@@ -91,7 +94,6 @@ public class UsuarioService {
     public List<UsuarioModel> buscarNomeContem(String nome){
         return repository.buscarNomeContem(nome);
     }
-
 
 
     public List<UsuarioDTO> listarUsuariosDTO(){
@@ -122,7 +124,6 @@ public class UsuarioService {
     }
 
 
-
     public UsuarioDTO atualizarPorIdDTO(Long id, UsuarioCreateDTO dto){
 
         Optional<UsuarioModel> usuario = repository.findById(id);
@@ -147,8 +148,9 @@ public class UsuarioService {
 
     } else {
 
-        return null;
+        throw new RuntimeException("Usuario nao encontrado");
 
+     }
     }
-}
+
 }

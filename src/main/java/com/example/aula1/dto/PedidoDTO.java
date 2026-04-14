@@ -2,8 +2,9 @@ package com.example.aula1.dto;
 
 public class PedidoDTO {
     
+    private Long id;
     private String descricao;
-    private double valor;
+    private Double valor;
     private String usuarionome;
 
 
@@ -11,14 +12,18 @@ public class PedidoDTO {
     public PedidoDTO(){
     }
 
-    public PedidoDTO(String descricao, double valor, String usuarionome) {
+    public PedidoDTO(String descricao, Double valor, String usuarionome) {
         this.descricao = descricao;
         this.valor = valor;
         this.usuarionome = usuarionome;
     }
 
-
-    
+    public PedidoDTO(Long id, String descricao, Double valor, String usuarionome) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.usuarionome = usuarionome;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -38,4 +43,14 @@ public class PedidoDTO {
     public void setUsuarionome(String usuarionome) {
         this.usuarionome = usuarionome;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }

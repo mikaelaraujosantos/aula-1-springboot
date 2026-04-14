@@ -17,7 +17,7 @@ public class PedidoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private double valor;
+    private Double valor;
 
     @ManyToOne //muitos pedidos para um usuario
     @JoinColumn(name = "id_usuario")//chave estrangeira

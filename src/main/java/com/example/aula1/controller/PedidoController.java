@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.aula1.dto.PedidoCreateDTO;
 import com.example.aula1.dto.PedidoDTO;
 import com.example.aula1.model.PedidoModel;
 import com.example.aula1.service.PedidoService;
@@ -13,8 +14,11 @@ import com.example.aula1.service.PedidoService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 
@@ -37,11 +41,13 @@ public class PedidoController {
         return ResponseEntity.status(404).body(resposta);
     }
     
+
     @GetMapping("/pedidos")
     public ResponseEntity<List<PedidoModel>> listarPedidos() {
         return ResponseEntity.ok().body(service.listarPedidos());
     }
     
+
     @GetMapping("/pedido/usuario/{id}")
     public ResponseEntity<List<PedidoModel>> buscarPedidosPorUsuario(@PathVariable Long id) {
         List<PedidoModel> pedidos = service.listarPedidosPorUsuario(id);
@@ -53,13 +59,36 @@ public class PedidoController {
         }
     }
 
+
     @GetMapping("/pedidos/dto")
     public ResponseEntity<List<PedidoDTO>> listarPedidosDTO() {
         List<PedidoDTO> pedidos = service.listarPedidosDTO();
         return ResponseEntity.ok().body(pedidos);
     }
     
+    @PostMapping("/pedido/dto/{usuarioid}")
+    public ResponseEntity<PedidoDTO> criarPedidoDTO(@PathVariable Long usuarioid, @RequestBody PedidoCreateDTO dto) {
+        
+        return ResponseEntity.ok().body(service.criarPedidoDTO(usuarioid, dto));
+    }
     
+
+    @PutMapping("/pedido/dto/{id}")
+    public ResponseEntity<PedidoDTO> atualizarPedidoDTO(@PathVariable Long id, @RequestBody PedidoCreateDTO dto) {
+        
+        
+        return ResponseEntity.ok().body(service.atualizarPedidoDTO(id, dto));
+    }
+
+    @DeleteMapping("/pedido/{id}")
+    public ResponseEntity<String> removerPedido(@PathVariable Long id) {
+        String resposta = service.removerPedido(id);
+        if (resposta.contains("sucesso")) {
+            return ResponseEntity.ok().body(resposta);
+        } else {
+            return ResponseEntity.status(404).body(resposta);
+        }
+    }
 
 
 }
